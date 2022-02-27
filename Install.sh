@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
-# I am using zsh instead of bash.  I was having some troubles using bash with
-# arrays.  Didn't want to investigate, so I just did zsh
+#######################################################################
+#           THYING THIS SCRIP I COPYED FROM THE HUB                   #
+#######################################################################
 rm -rf zsh 
 sudo apt install stow -y
 sudo apt install zsh -y
@@ -12,3 +13,17 @@ do
     stow $folder
 done
 popd
+
+
+
+
+
+#if [[ -z $STOW_FOLDERS ]]; then
+ #   STOW_FOLDERS="bin,i3,nvim,tmux,zsh"
+#fi
+
+#if [[ -z $DOTFILES ]]; then
+ #   DOTFILES=$HOME/.config/.dotfiles
+#fi
+
+#STOW_FOLDERS=$STOW_FOLDERS DOTFILES=$DOTFILES $DOTFILES/install
