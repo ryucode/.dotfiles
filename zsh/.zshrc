@@ -109,14 +109,14 @@ if [ "$color_prompt" = yes ]; then
 	ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
     fi
 else
-    PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%# '
+    PROMPT='%n@%m:%~%# '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    TERM_TITLE='\e]0;${debian_chroot:+($debian_chroot)}%n@%m: %~\a'
+    TERM_TITLE='%n@%m: %~\a'
     ;;
 *)
     ;;
@@ -175,5 +175,4 @@ fi
 
 # fnm
 export PATH=/home/ryucode/.local/bin:$PATH
-eval "`fnm env`"
-fpath+=~/.config/zsh/completions/_fnm
+
