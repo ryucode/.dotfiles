@@ -5,19 +5,48 @@ export TERM=xterm-256color
 source ~/.aliases
 #source /etc/vim/vimrc
 
+setopt autocd              # change directory just by typing its name
+#setopt correct            # auto correct mistakes
+setopt interactivecomments # allow comments in interactive mode
+setopt ksharrays           # arrays start at 0
+setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
+setopt nonomatch           # hide error message if there is no match for the pattern
+setopt notify              # report the status of background jobs immediately
+setopt numericglobsort     # sort filenames numerically when it makes sense
+setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
 # hide EOL sign ('%')
 export PROMPT_EOL_MARK=""
 
+# configure key keybindings
+bindkey -e                                        # emacs key bindings
+bindkey ' ' magic-space                           # do history expansion on space
+bindkey '^[[3;5~' kill-word                       # ctrl + Supr
+bindkey '^[[1;5C' forward-word                    # ctrl + ->
+bindkey '^[[C' forward-word                       # ctrl + ->
+bindkey '^[[1;5D' backward-word                   # ctrl + <-
+bindkey '^[[D' backward-word                      # ctrl + <-
+bindkey '^[[5~' beginning-of-buffer-or-history    # page up
+bindkey '^[[6~' end-of-buffer-or-history          # page down
+bindkey '^[[Z' undo                               # shift + tab undo last action
 
-
+# enable completion features
+autoload -Uz compinit
+compinit -d ~/.cache/zcompdump
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
 
 # History configurations
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=2000
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+#setopt share_history         # share command history data
 
 # force zsh to show the complete history
 alias history="history 0"
@@ -52,19 +81,16 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PROMPT=$'%F{%(#.blue.green)}┌──$(%B%F{%(#.red.blue)}%n%(#.💀. ㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{yello}>>>>)%b%F{reset} '
+    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)──}(%B%F{%(#.red.blue)}%n%(#.💀.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{yello}>>>>)%b%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
-  #TOOK THIS SYMBOL ㉿ -- ㉿ -- ㉿ ㉿ ㉿ ㉿ ㉿
-
-
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
+    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
 	# ksharrays breaks the plugin. This is fixed now but let's disable it in the
 	# meantime.
 	# https://github.com/zsh-users/zsh-syntax-highlighting/pull/689
-	unsetopt ksharrays
-	. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+unsetopt ksharrays
+	. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 	ZSH_HIGHLIGHT_STYLES[default]=none
 	ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -109,14 +135,14 @@ if [ "$color_prompt" = yes ]; then
 	ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
     fi
 else
-    PROMPT='%n@%m:%~%# '
+    PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%# '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    TERM_TITLE='%n@%m: %~\a'
+    TERM_TITLE='\e]0;${debian_chroot:+($debian_chroot)}%n@%m: %~\a'
     ;;
 *)
     ;;
@@ -158,21 +184,19 @@ if [ -x /usr/bin/dircolors ]; then
     export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
     export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-    
+    # Take advantage of $LS_COLORS for completion as well
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
 
 # some more ls aliases
 alias ll='ls -l'
-alias la='ls -al'
+alias la='ls -A'
 alias l='ls -CF'
 
 # enable auto-suggestions based on the history
-if [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
-
-# fnm
-export PATH=/home/ryucode/.local/bin:$PATH
-
+        
