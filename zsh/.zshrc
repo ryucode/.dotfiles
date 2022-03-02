@@ -2,7 +2,7 @@
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
 export TERM=xterm-256color
-source ~/.zsh/.aliases
+source ~/.aliases
 #source /etc/vim/vimrc
 
 #setopt autocd              # change directory just by typing its name
