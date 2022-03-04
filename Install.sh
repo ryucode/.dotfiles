@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-#######################################################################
-#           THYING THIS SCRIP I COPYED FROM THE HUB                   #
-#######################################################################
-#!/usr/bin/env bash
 
 set -e
 
@@ -10,8 +6,8 @@ skip_system_packages="${1}"
 
 os_type="$(uname -s)"
 
-apt_packages="curl git iproute2 python3-pip ripgrep tmux zsh"
-apt_packages_optional="gnupg htop  rsync  zsh-syntax-highlighting zsh-autosuggestions "
+apt_packages="curl git iproute2 neovim  python3 python3-pip ripgrep tmux zsh"
+apt_packages_optional="gnupg htop  npm rsync  zsh-syntax-highlighting zsh-autosuggestions fonts-firacode"
 
 
 install_asdf_version="v0.8.1"
@@ -133,6 +129,12 @@ fi
 
 mkdir -p  "${HOME}/.config/.tmux"  \
 
+###############################################################################
+# my GIT
+###############################################################################
+
+
+cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
 
 ###############################################################################
 # Install Plug (Vim plugin manager)
@@ -239,7 +241,7 @@ export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 ###############################################################################
 
 [ "${os_type}" != "macOS" ] &&  chsh -s "$(command -v zsh)"
-. "${HOME}/.zshrc"
+#. "${HOME}/.zshrc"
 
 
 ###############################################################################
@@ -248,10 +250,7 @@ export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 
 cat << EOF
 Everything was installed successfully!
-Check out the README file on GitHub to do 1 quick thing manually:
-https://github.com/nickjj/dotfiles did-you-install-everything-successfully
-You can safely close this terminal.
-The next time you open your terminal zsh will be ready to go!
+Please Restart your New System!!!!!
 
 EOF
 
