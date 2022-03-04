@@ -131,7 +131,7 @@ mkdir -p  "${HOME}/.config/.tmux"  \
 ###############################################################################
 
 
-cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
+#cp "${clone_path}/.gitconfig.user" "${HOME}/.gitconfig.user"
 
 ###############################################################################
 # Install Plug (Vim plugin manager)
