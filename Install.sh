@@ -19,11 +19,8 @@ install_node_version="14.17.3"
 
 function no_system_packages() {
 cat << EOF
-System package installation isn't supported with your OS / distro.
-Please install any dependent packages on your own. You can view the list at:
-    https://github.com/nickjj/dotfiles/blob/master/install
-Then re-run the script and explicitly skip installing system packages:
-    bash <(curl -sS https://raw.githubusercontent.com/nickjj/dotfiles/master/install) --skip-system-packages
+  this scrip will ONLY install neovim , zsh, tmux 
+  nothing big just what i have reseach and copy from good developers and things that will work just right for my self
 EOF
 
 exit 1
