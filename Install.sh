@@ -5,8 +5,8 @@ set -e
 skip_system_packages="${1}"
 
 os_type="$(uname -s)"
-
-apt_packages="curl git iproute2 neovim  python3 python3-pip  cmake ripgrep tmux zsh"
+                                  
+apt_packages="curl git iproute2 python3 python3-pip  cmake  ripgrep tmux zsh ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip doxygen"
 apt_packages_optional="gnupg htop  npm rsync  zsh-syntax-highlighting zsh-autosuggestions fonts-firacode"
 
 
@@ -92,6 +92,14 @@ EOF
 else
     echo "System package installation was skipped!"
 fi
+
+###############################################################################
+# NVIM FROM SOURCE
+###############################################################################
+  git clone https://github.com/neovim/neovim
+  cd neovim && make
+  sudo make install
+
 
 ###############################################################################
 # Clone dotfiles
