@@ -165,12 +165,7 @@ ln -fs "${clone_path}/zsh/.zshrc" "${HOME}/.zsh/.zshrc"
 ln -fs "${clone_path}/zsh/.aliases" "${HOME}/.zsh.aliases"
 ln -fs "${clone_path}/tmux/.tmux.conf" "${HOME}/.tmux/.tmux.conf"
 ln -fs "${clone_path}/nvim" "${HOME}/.config/"
-
-
-
-
 -------------------------------------------------------------------------------
-
 EOF
 
 while true; do
@@ -248,7 +243,6 @@ export TMUX_PLUGIN_MANAGER_PATH="${HOME}/.tmux/plugins"
 cat << EOF
 Everything was installed successfully!
 Please Restart your New System!!!!!
-
 EOF
 
 exit 0
