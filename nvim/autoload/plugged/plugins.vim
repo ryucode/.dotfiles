@@ -34,7 +34,7 @@ call plug#begin(stdpath('config').'/autoload/plugged')
 
     Plug 'mhinz/vim-startify'
 
-    Plug 'Valloric/YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe', {'do': 'python3 install.py --clangd-completer' } ""<<<, {'do': 'python3 install.py --clangd-completer' }"
 
    "EMMET
    Plug 'mattn/emmet-vim'
